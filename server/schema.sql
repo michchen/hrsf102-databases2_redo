@@ -1,0 +1,24 @@
+CREATE DATABASE chat;
+
+USE chat;
+
+CREATE TABLE users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(50)
+);
+
+
+CREATE TABLE rooms (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(50)
+);
+
+CREATE TABLE messages (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  body VARCHAR(140),
+  user INT,
+  room INT,
+  FOREIGN KEY (user) REFERENCES users(id),
+  FOREIGN KEY (room) REFERENCES rooms(id)
+  -- ,created_at DATETIME
+);
