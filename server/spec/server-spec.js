@@ -29,7 +29,7 @@ describe('Persistent Node Chat Server', function() {
 
   it('Should insert posted messages to the DB', function(done) {
 
-    console.log('---------------------------------spec');
+    // console.log('---------------------------------spec');
 
     request({
       method: 'POST',
@@ -37,7 +37,7 @@ describe('Persistent Node Chat Server', function() {
       json: { username: 'Valjean' }
     }, function () {
 
-      console.log('-----------------spec > username callback');
+      // console.log('-----------------spec > username callback');
 
       request({
         method: 'POST',
@@ -49,14 +49,14 @@ describe('Persistent Node Chat Server', function() {
         }
       }, function () {
 
-        console.log('-----------------spec > message callback');
+        // console.log('-----------------spec > message callback');
 
         var queryString = 'SELECT * FROM messages';
         var queryArgs = [];
 
         dbConnection.query(queryString, queryArgs, function(err, results) {
 
-          console.log('----------spec > query callback. results:');
+          // console.log('----------spec > query callback. results:');
           // console.log(results)
 
           expect(results.length).to.equal(1);
@@ -80,15 +80,12 @@ describe('Persistent Node Chat Server', function() {
 
     dbConnection.query(queryString, queryArgs, function(err) {
       if (err) { throw err; }
-      console.log('----------spec2 > query callback');
+      // console.log('----------spec2 > query callback');
 
       request('http://127.0.0.1:3000/classes/messages', function(error, response, body) {
-        console.log('----------spec2 > request callback. results:');
-        console.log(messageLog);
         var messageLog = JSON.parse(body);
-        done();
         expect(messageLog[0].body).to.equal('Men like you can never change!');
-        expect(messageLog[0].room).to.equal('1');
+        expect(messageLog[0].room).to.equal(1);
         done();
       });
     });
